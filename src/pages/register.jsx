@@ -33,7 +33,7 @@ const Register = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    if (name === "password") {
+    if (name === "userPassword") {
       evaluatePasswordStrength(value);
     }
   };
