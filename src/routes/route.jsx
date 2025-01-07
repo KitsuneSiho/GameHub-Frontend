@@ -5,6 +5,7 @@ import Login from '../pages/login';
 import { posts } from '../pages/sampleData';
 import Community from '../pages/community';
 import Register from '../pages/register';
+import Test from '../pages/boardTest';
 
 
 function Main() {
@@ -14,6 +15,7 @@ function Main() {
         <Route path="/" element={<Home />} /> {/* 기본 경로 */}
         <Route path="/home" element={<Home />} />
         <Route path="/board" element={<Board posts={posts} />} />
+        <Route path="/test" element={<Test />} />
         <Route path="/login" element={<Login />} />
         <Route path="/community" element={<Community />} />
         <Route path="/register" element={<Register />} />

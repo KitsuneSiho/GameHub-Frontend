@@ -1,0 +1,47 @@
+.layout {
+    display: flex;
+    position: relative;
+}
+
+.sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.category {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.category.active {
+    background-color: #ddd;
+}
+
+.mainContent {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.post {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.writeButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #82bb8f;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 15px;
+    border-width: 0;
+    cursor: pointer;
+}
