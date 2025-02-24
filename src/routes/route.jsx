@@ -6,7 +6,7 @@ import { posts } from '../pages/sampleData';
 import Community from '../pages/community';
 import Register from '../pages/register';
 import Test from '../pages/boardTest';
-
+import Writer from '../pages/writer';
 
 function Main() {
   return (
@@ -19,6 +19,7 @@ function Main() {
         <Route path="/login" element={<Login />} />
         <Route path="/community" element={<Community />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/writer" element={<Writer />} /> {/* /writer 경로 설정 */}
 
         <Route path="*" element={<NotFound404 />} /> {/* 없는 페이지 처리 */}
       </Routes>
