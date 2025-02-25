@@ -1,0 +1,93 @@
+import React, { useState } from "react";
+import '../assets/css/writer.css'; // 외부 CSS 파일을 불러옵니다.
+
+const Writer = () => {
+  const [userInfo, setUserInfo] = useState([
+    { udi: 19969, user_id: "siho1229", user_name: "시호", date: "2025-02-02" },
+  ]);
+  
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleSave = async () => {
+    const postData = {
+      title: title,
+      content: content,
+      user_id: userInfo[0].user_id, // 작성자의 ID 추가
+      date: new Date().toISOString(), // 현재 날짜 추가
+    };
+  
+    try {
+      const response = await fetch('http://localhost:8080/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('네트워크 응답이 올바르지 않습니다.');
+      }
+  
+      const data = await response.json();
+      alert('저장되었습니다!');
+      // 추가적으로 성공적으로 저장된 후의 처리 (예: 폼 초기화 등)
+      setTitle('');
+      setContent('');
+    } catch (error) {
+      console.error('저장 중 오류 발생:', error);
+      alert('저장에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  return (
+    <div className="writer-container">
+      <div className="post-list">
+        <h3>글쓰기</h3>
+        <hr className="head-line" />
+        
+        {/* 작성자 정보 출력 */}
+        {userInfo.map((uid) => (
+          <div key={uid.udi}>
+            <h4>작성자: {uid.user_name}</h4>
+            <p>작성일: {uid.date}</p>
+            <hr />
+          </div>
+        ))}
+        
+        {/* 글쓰기 폼 */}
+        <div className="input-container">
+          <label htmlFor="title" className="input-label">
+            제목
+          </label>
+          <input
+            type="text"
+            id="title"
+            className="input-field"
+            placeholder="제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          
+          <label htmlFor="content" className="input-label">
+            본문
+          </label>
+          <textarea
+            id="content"
+            className="input-field content-field"
+            placeholder="본문을 입력하세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <button className="save-btn" onClick={handleSave}>
+        저장하기
+      </button>
+    </div>
+  );
+};
+
+export default Writer;

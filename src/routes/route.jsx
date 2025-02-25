@@ -7,6 +7,7 @@ import Community from '../pages/community';
 import Register from '../pages/register';
 import Testpg2 from '../pages/MyEditor';
 import MyEditor from '../pages/MyEditor';
+import Writer from '../pages/writer';
 
 
 function Main() {
@@ -20,6 +21,7 @@ function Main() {
         <Route path="/login" element={<Login />} />
         <Route path="/community" element={<Community />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/Writer" element={<Writer />} />
 
         <Route path="*" element={<NotFound404 />} /> {/* 없는 페이지 처리 */}
       </Routes>
