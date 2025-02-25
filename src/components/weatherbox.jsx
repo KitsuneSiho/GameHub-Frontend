@@ -1,5 +1,6 @@
 import React from "react";
 import '../assets/css/weatherbox.css';
+import '../assets/css/weatherbox.js';
 
 const WeatherBox = () => {
     return (

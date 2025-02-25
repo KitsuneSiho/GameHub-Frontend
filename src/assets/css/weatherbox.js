@@ -1,107 +1,125 @@
+// Assets are property of Nintendo!
 // WeatherBox.js
-// 날씨 효과 및 배경을 설정하기 위한 유틸리티 함수들
 
-// 현재 시간이 낮인지 밤인지 판단
-export const isDayTime = (sunrise, sunset) => {
+// 위젯 초기화 함수
+export const initWeatherWidget = (containerRef, cityName, temperature, weatherDescription) => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    
+    // 현재 시간 기준 낮/밤 설정
     const currentTime = new Date().getTime() / 1000;
-    return currentTime > sunrise && currentTime < sunset;
+    const dayOrNight = true; // 기본값은 낮으로 설정
+    
+    // 날씨 배경 설정
+    setWeatherBackground(container, weatherDescription, dayOrNight);
+    
+    // 버튼과 도시, 온도 설정
+    setTimeout(() => {
+      const brickBtn = container.querySelector('#brick-btn');
+      if (brickBtn) {
+        brickBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716211/weather%20machine/btn-temp-f.png\')';
+      }
+    }, 500);
+    
+    // 도시 이름과 온도 표시
+    const cityElem = container.querySelector('.cityg');
+    const tempElem = container.querySelector('.temperature');
+    
+    if (cityElem) cityElem.textContent = cityName;
+    if (tempElem) tempElem.textContent = Math.round(temperature - 273.15) + "°C";
+    
+    return { container, cityElem, tempElem };
+  };
+  
+  // 마리오 점프 애니메이션
+  export const marioJump = (container) => {
+    if (!container) return;
+    
+    const marioBtn = container.querySelector('#mario-btn');
+    const brickBtn = container.querySelector('#brick-btn');
+    
+    if (marioBtn) {
+      // 마리오 점프 이미지로 변경
+      marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-jump.png\')';
+      
+      // 일정 시간 후 원래 이미지로 복귀
+      setTimeout(() => {
+        marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png\')';
+      }, 350);
+    }
+    
+    if (brickBtn) {
+      // 벽돌 효과 (React에서는 애니메이션으로 구현 필요)
+      setTimeout(() => {
+        // 벽돌 애니메이션 (React에서 별도 구현 필요)
+      }, 100);
+    }
   };
   
   // 온도 변환 (섭씨 <-> 화씨)
-  export const convertTemperature = (kelvin, isCelsius) => {
-    if (isCelsius) {
-      // 켈빈 -> 섭씨
-      return Math.round(kelvin - 273.15) + "°C";
+  export const convertTemp = (container, temperature, showCelsius) => {
+    if (!container) return showCelsius;
+    
+    const tempElem = container.querySelector('.temperature');
+    const brickBtn = container.querySelector('#brick-btn');
+    
+    if (!tempElem || !brickBtn) return showCelsius;
+    
+    if (showCelsius === false) {
+      tempElem.textContent = Math.round(temperature - 273.15) + "°C";
+      brickBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716211/weather%20machine/btn-temp-f.png\')';
+      return true;
     } else {
-      // 켈빈 -> 화씨
-      return Math.round((kelvin * 9) / 5 - 459.67) + "°F";
+      tempElem.textContent = Math.round(temperature * 9 / 5 - 459.67) + "°F";
+      brickBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/btn-temp-c.png\')';
+      return false;
     }
   };
   
-  // 날씨 상태에 따른 배경색 얻기
-  export const getBackgroundColor = (weatherType, isDayTime) => {
-    switch (weatherType) {
-      case "clear":
-        return isDayTime ? "#5C94FC" : "#090F1B";
-      case "clouds":
-        return isDayTime ? "#5C94FC" : "#090F1B";
-      case "rain":
-      case "drizzle":
-      case "thunderstorm":
-        return isDayTime ? "#1528A2" : "#020514";
-      case "snow":
-        return isDayTime ? "#2142FF" : "#060E39";
-      case "atmosphere":
-        return isDayTime ? "#C6D3D8" : "#828C8F";
-      default:
-        return isDayTime ? "#5C94FC" : "#090F1B";
-    }
-  };
-  
-  // 날씨 아이콘 유형 결정
-  export const getWeatherIconType = (weatherType) => {
-    switch (weatherType.toLowerCase()) {
-      case "clear":
-        return "clear";
-      case "clouds":
-        return "clouds";
-      case "rain":
-        return "rain";
-      case "drizzle":
-        return "drizzle";
-      case "thunderstorm":
-        return "thunderstorm";
-      case "snow":
-        return "snow";
-      case "mist":
-      case "smoke":
-      case "haze":
-      case "dust":
-      case "fog":
-        return "atmosphere";
-      default:
-        return "clouds";
-    }
-  };
-  
-  // 눈 애니메이션을 위한 Canvas 설정 (React에서 사용하기 위해 수정됨)
-  export const setupSnowCanvas = (canvasRef) => {
-    if (!canvasRef.current) return;
-  
+  // 눈 효과 생성
+  export const makeSnow = (canvasRef) => {
+    if (!canvasRef || !canvasRef.current) return;
+    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+    
     const w = window.innerWidth;
     const h = window.innerHeight;
     
-    canvas.width = w;
-    canvas.height = h;
+    canvas.setAttribute('width', w);
+    canvas.setAttribute('height', h);
     
-    const rate = 50;
-    const arc = 500;
-    let time = 0;
-    const size = 2;
-    const speed = 10;
-    const lights = [];
-    const colors = ['#eee'];
+    let rate = 50;
+    let arc = 500;
+    let time;
+    let count;
+    let size = 2;
+    let speed = 10;
+    let lights = [];
+    let colors = ['#eee'];
     
-    // 눈송이 초기화
-    for (let i = 0; i < arc; i++) {
-      lights[i] = {
-        x: Math.ceil(Math.random() * w),
-        y: Math.ceil(Math.random() * h),
-        toX: Math.random() * 5 + 1,
-        toY: Math.random() * 5 + 1,
-        c: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * size
-      };
+    function init() {
+      time = 0;
+      count = 0;
+      
+      for (let i = 0; i < arc; i++) {
+        lights[i] = {
+          x: Math.ceil(Math.random() * w),
+          y: Math.ceil(Math.random() * h),
+          toX: Math.random() * 5 + 1,
+          toY: Math.random() * 5 + 1,
+          c: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * size
+        };
+      }
     }
     
-    // 눈송이 애니메이션
-    const animateSnow = () => {
+    function bubble() {
       ctx.clearRect(0, 0, w, h);
       
       for (let i = 0; i < arc; i++) {
-        const li = lights[i];
+        let li = lights[i];
         
         ctx.beginPath();
         ctx.arc(li.x, li.y, li.size, 0, Math.PI * 2, false);
@@ -121,57 +139,343 @@ export const isDayTime = (sunrise, sunset) => {
         time++;
       }
       
-      return requestAnimationFrame(animateSnow);
-    };
+      requestAnimationFrame(bubble);
+    }
     
-    // 애니메이션 시작
-    return animateSnow();
+    init();
+    bubble();
   };
   
-  // 비 애니메이션을 위한 Canvas 설정 (React에서 사용하기 위해 수정됨)
-  export const setupRainCanvas = (canvasRef, dropSizeFactor = 20) => {
-    if (!canvasRef.current) return;
-  
+  // 비 효과 생성
+  export const makeRain = (canvasRef, dropSizeFactor, interval) => {
+    if (!canvasRef || !canvasRef.current) return;
+    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const w = window.innerWidth;
-    const h = window.innerHeight;
     
-    canvas.width = w;
-    canvas.height = h;
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    
+    canvas.width = W;
+    canvas.height = H;
     
     const num = 300;
-    const raindrops = [];
+    const arr = [];
     
-    // 빗방울 초기화
     for (let i = 0; i < num; i++) {
-      raindrops.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+      arr.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
         w: 1,
         h: Math.random() * dropSizeFactor,
         s: Math.random() * 10 + 3
       });
     }
     
-    // 빗방울 애니메이션
-    const animateRain = () => {
-      ctx.clearRect(0, 0, w, h);
+    function raindrops() {
+      ctx.clearRect(0, 0, W, H);
       
       for (let i = 0; i < num; i++) {
         ctx.fillStyle = 'rgba(158, 202, 255, 1.0)';
-        ctx.fillRect(raindrops[i].x, raindrops[i].y, raindrops[i].w, raindrops[i].h);
-        
-        // 빗방울 이동
-        raindrops[i].y += raindrops[i].s;
-        if (raindrops[i].y >= h) {
-          raindrops[i].y = -raindrops[i].h;
-        }
+        ctx.fillRect(arr[i].x, arr[i].y, arr[i].w, arr[i].h);
       }
       
-      return requestAnimationFrame(animateRain);
-    };
+      makeItRain();
+      
+      requestAnimationFrame(raindrops);
+    }
     
-    // 애니메이션 시작
-    return animateRain();
+    function makeItRain() {
+      for (let i = 0; i < num; i++) {
+        arr[i].y += arr[i].s;
+        if (arr[i].y >= H) {
+          arr[i].y = -arr[i].h;
+        }
+      }
+    }
+    
+    raindrops();
   };
+  
+  // 날씨 배경 설정
+  export const setWeatherBackground = (container, description, dayOrNight) => {
+    if (!container) return;
+    
+    switch (description.toLowerCase()) {
+      case "thunderstorm":
+        cardThunderstorm(container, dayOrNight);
+        break;
+      case "drizzle":
+        cardDrizzle(container, dayOrNight);
+        break;
+      case "rain":
+        cardRain(container, dayOrNight);
+        break;
+      case "snow":
+        cardSnow(container, dayOrNight);
+        break;
+      case "atmosphere":
+        cardAtmosphere(container, dayOrNight);
+        break;
+      case "clear":
+        cardClear(container, dayOrNight);
+        break;
+      case "clouds":
+        cardClouds(container, dayOrNight);
+        break;
+      case "extreme":
+        cardExtreme(container, dayOrNight);
+        break;
+      case "additional":
+        cardAdditional(container, dayOrNight);
+        break;
+      default:
+        cardClear(container, dayOrNight);
+    }
+  };
+  
+  // 날씨 상태별 배경 설정 함수들
+  function cardClear(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#5C94FC';
+      
+      const sunWrapper = document.createElement('div');
+      sunWrapper.className = 'sun-wrapper';
+      sunWrapper.innerHTML = '<div class="sun-inner"><img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716209/weather%20machine/sun-animated.gif\'></div>';
+      
+      const displayedData = container.querySelector('.displayed-data');
+      if (displayedData) {
+        displayedData.insertAdjacentElement('afterend', sunWrapper);
+      }
+    } else {
+      container.style.backgroundColor = '#090F1B';
+      
+      const starElem = document.createElement('div');
+      starElem.className = 'star';
+      starElem.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716209/weather%20machine/star.png\'>';
+      
+      const displayedData = container.querySelector('.displayed-data');
+      if (displayedData) {
+        displayedData.insertAdjacentElement('afterend', starElem);
+      }
+    }
+  }
+  
+  function cardThunderstorm(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      // 비구름 요소 추가
+      for (let i = 1; i <= 4; i++) {
+        const cloudRain = document.createElement('div');
+        cloudRain.id = `cloud-rain-${i}`;
+        cloudRain.className = 'cloud-rain';
+        cloudRain.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-rain.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudRain);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#1528A2';
+      container.style.animationName = 'thunderday';
+    } else {
+      container.style.backgroundColor = '#020514';
+      container.style.animationName = 'thundernight';
+    }
+    
+    // 캔버스가 있을 경우 비 효과 추가
+    const canvas = container.querySelector('#particle');
+    if (canvas) {
+      makeRain({ current: canvas }, 25, 5);
+    }
+  }
+  
+  function cardSnow(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-snow.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      // 구름 요소 추가
+      for (let i = 1; i <= 2; i++) {
+        const cloudSimple = document.createElement('div');
+        cloudSimple.id = `cloud-simple-${i}`;
+        cloudSimple.className = 'cloud-simple';
+        cloudSimple.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-simple.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudSimple);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#2142FF';
+    } else {
+      container.style.backgroundColor = '#060E39';
+      
+      const starElem = document.createElement('div');
+      starElem.className = 'star';
+      starElem.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/star.png\'>';
+      
+      if (displayedData) {
+        displayedData.insertAdjacentElement('afterend', starElem);
+      }
+    }
+    
+    // 캔버스가 있을 경우 눈 효과 추가
+    const canvas = container.querySelector('#particle');
+    if (canvas) {
+      makeSnow({ current: canvas });
+    }
+  }
+  
+  // 나머지 카드 함수들도 동일한 방식으로 구현...
+  function cardClouds(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      // 구름 요소 추가
+      for (let i = 1; i <= 4; i++) {
+        const cloudDouble = document.createElement('div');
+        cloudDouble.id = `cloud-double-${i}`;
+        cloudDouble.className = 'cloud-double';
+        cloudDouble.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-double.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudDouble);
+      }
+      
+      for (let i = 1; i <= 2; i++) {
+        const cloudSimple = document.createElement('div');
+        cloudSimple.id = `cloud-simple-${i}`;
+        cloudSimple.className = 'cloud-simple';
+        cloudSimple.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-simple.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudSimple);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#5C94FC';
+    } else {
+      container.style.backgroundColor = '#090F1B';
+    }
+  }
+  
+  function cardDrizzle(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      const cloudRain = document.createElement('div');
+      cloudRain.id = 'cloud-rain-2';
+      cloudRain.className = 'cloud-rain';
+      cloudRain.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-rain.png\'>';
+      displayedData.insertAdjacentElement('afterend', cloudRain);
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#1528A2';
+    } else {
+      container.style.backgroundColor = '#020514';
+    }
+    
+    // 캔버스가 있을 경우 비 효과 추가
+    const canvas = container.querySelector('#particle');
+    if (canvas) {
+      makeRain({ current: canvas }, 5, 15);
+    }
+  }
+  
+  function cardRain(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      for (let i = 1; i <= 2; i++) {
+        const cloudRain = document.createElement('div');
+        cloudRain.id = `cloud-rain-${i}`;
+        cloudRain.className = 'cloud-rain';
+        cloudRain.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-rain.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudRain);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#1528A2';
+    } else {
+      container.style.backgroundColor = '#020514';
+    }
+    
+    // 캔버스가 있을 경우 비 효과 추가
+    const canvas = container.querySelector('#particle');
+    if (canvas) {
+      makeRain({ current: canvas }, 20, 10);
+    }
+  }
+  
+  function cardExtreme(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      for (let i = 1; i <= 4; i++) {
+        const leafWrapper = document.createElement('div');
+        leafWrapper.className = 'leaf-wrapper';
+        
+        const leafGreen = document.createElement('div');
+        leafGreen.id = `leaf-green-${i}`;
+        leafGreen.className = 'leaf-green';
+        leafGreen.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/leaf-green.png\'>';
+        
+        leafWrapper.appendChild(leafGreen);
+        displayedData.insertAdjacentElement('afterend', leafWrapper);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#5C94FC';
+    } else {
+      container.style.backgroundColor = '#090F1B';
+    }
+  }
+  
+  function cardAdditional(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    const displayedData = container.querySelector('.displayed-data');
+    if (displayedData) {
+      const leafWrapper = document.createElement('div');
+      leafWrapper.className = 'leaf-wrapper';
+      
+      const leafGreen = document.createElement('div');
+      leafGreen.id = 'leaf-green-1';
+      leafGreen.className = 'leaf-green';
+      leafGreen.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/leaf-green.png\'>';
+      
+      leafWrapper.appendChild(leafGreen);
+      displayedData.insertAdjacentElement('afterend', leafWrapper);
+      
+      for (let i = 1; i <= 2; i++) {
+        const cloudSimple = document.createElement('div');
+        cloudSimple.id = `cloud-simple-${i}`;
+        cloudSimple.className = 'cloud-simple';
+        cloudSimple.innerHTML = '<img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/cloud-simple.png\'>';
+        displayedData.insertAdjacentElement('afterend', cloudSimple);
+      }
+    }
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#5C94FC';
+    } else {
+      container.style.backgroundColor = '#090F1B';
+    }
+  }
+  
+  function cardAtmosphere(container, dayOrNight) {
+    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    
+    if (dayOrNight == 1) {
+      container.style.backgroundColor = '#C6D3D8';
+    } else {
+      container.style.backgroundColor = '#828C8F';
+    }
+  }
