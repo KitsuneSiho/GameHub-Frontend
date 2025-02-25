@@ -1,0 +1,39 @@
+.write-container {
+    font-family: 'Arial', sans-serif;
+    background-color: darkolivegreen;
+    padding: 20px;
+    margin: 0 auto;
+    width: 900px;
+    border-radius: 8px;
+}
+h3 {
+    font-size: 2rem;
+    color: #333;
+    text-align: left
+}
+
+.head-line {
+    border: 1px solid #000;
+}
+.post-list {
+    margin-bottom: 30px;
+}
+.post-list h4{
+    font-size: medium;
+}
+.input-container {
+    margin-top: 20px;
+}
+.input-label {
+    font-size: 1.1rem;
+    display: block;
+}
+
+.input-field {
+    height: 300px;
+    resize: none;
+}
+
+.save-btn:hover {
+    background-color: aqua;
+}
