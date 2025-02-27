@@ -1,5 +1,4 @@
 // Assets are property of Nintendo!
-// WeatherBox.js
 
 // 위젯 초기화 함수
 export const initWeatherWidget = (containerRef, cityName, temperature, weatherDescription) => {

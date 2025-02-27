@@ -1,22 +1,37 @@
 import React from "react";
 import '../assets/css/weatherbox.css';
-import '../assets/css/weatherbox.js';
+import { 
+    initWeatherWidget, 
+    marioJump, 
+    convertTemp, 
+    makeSnow, 
+    makeRain, 
+    setWeatherBackground 
+  } from '../assets/css/weatherbox.js';
 
 const WeatherBox = () => {
+    const containRef = useRef(null);
+
+    useEffect(() => {
+        // 컴포넌트가 마운트된 후 위젯 초기화 (하드코딩된 값으로 테스트)
+        
+    })
     return (
-        <div className="box-temperature">
-            <div className="displayed-data">
-                <div className="cityg">용인</div>
-                <div className="temperature">-2°C</div>
-                <div>맑음</div>
+        <div className="weather-widget-container"> {/* 리액트에선 상위 부모요소가 필수적으로 있어야 하므로 하나의 부모 요소로 감싸기 */}
+            <div className="container box-temperature">
+                <div className="displayed-data">
+                    <p className="temperature"></p>
+                    <p className="cityg"></p>
+                </div>
+                <canvas id="particle"></canvas>
+                <div className="box-btn">
+                    <button type="button" id="brick-btn" className="btn"></button>
+                </div>
+                <button type="button" id="mario-btn" className="btn"></button>
             </div>
-            
-            {/* 애니메이션 요소들 추가 */}
-            <div className="sun-inner">
-                <img src="https://res.cloudinary.com/dt4qeehms/image/upload/v1476716213/weather%20machine/sun.png" alt="sun" />
+            <div className="container box-footer">
+                <footer><p>© 2016 ErreC • All Rights Reserved</p></footer>
             </div>
-            
-            {/* 필요한 기타 요소들 (구름, 별 등)을 추가할 수 있습니다 */}
         </div>
     );
 };
