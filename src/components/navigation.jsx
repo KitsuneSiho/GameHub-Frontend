@@ -16,8 +16,6 @@ function Navigation() {
             <Nav.Link href="game-mod">게임모드</Nav.Link>
             <Nav.Link href="community">커뮤니티</Nav.Link>
             <Nav.Link href="test">테스트</Nav.Link>
-            <Nav.Link href="myEditor">테스트2이디터</Nav.Link>
-            <Nav.Link href="editor">글쓰기 에디터</Nav.Link>
             <Nav.Link href="board">게시판</Nav.Link>
           </Nav>
           <Nav className="ms-auto">

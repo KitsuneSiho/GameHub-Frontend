@@ -5,8 +5,7 @@ import Login from '../pages/login';
 import { posts } from '../pages/sampleData';
 import Community from '../pages/community';
 import Register from '../pages/register';
-import Testpg2 from '../pages/MyEditor';
-import MyEditor from '../pages/MyEditor';
+import Test from '../pages/test';
 import Writer from '../pages/writer';
 
 
@@ -17,8 +16,8 @@ function Main() {
         <Route path="/" element={<Home />} /> {/* 기본 경로 */}
         <Route path="/home" element={<Home />} />
         <Route path="/board" element={<Board posts={posts} />} />
-        <Route path="/MyEditor" element={<MyEditor />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/test" element={<Test />} />
         <Route path="/community" element={<Community />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Writer" element={<Writer />} />
