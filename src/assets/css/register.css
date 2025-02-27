@@ -1,0 +1,44 @@
+/* Register.css */
+
+/* 컨테이너 스타일 */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* 카드 스타일 */
+  .register-card {
+    width: 30rem;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 타이틀 스타일 */
+  .register-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* 비밀번호 강도 바 스타일 */
+  .password-strength-bar {
+    height: 5px;
+    margin-top: 5px;
+  }
+  
+  /* 비밀번호 강도 텍스트 스타일 */
+  .password-strength-text {
+    font-size: 0.8rem;
+  }
+  
+  /* 확인 중 텍스트 스타일 */
+  .checking-text {
+    color: #6c757d; /* Bootstrap의 muted 텍스트 색상 */
+  }
+  
+  /* 버튼 스타일 */
+  .register-button {
+    width: 100%;
+    margin-top: 1rem;
+  }
