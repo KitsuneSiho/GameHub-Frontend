@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from '../components/layout'
 import Home from '../pages/home';
 import Board from '../pages/board';
 import Login from '../pages/login';
@@ -8,24 +9,26 @@ import Register from '../pages/register';
 import Test from '../pages/boardTest';
 import Writer from '../pages/writer';
 
-function Main() {
+function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} /> {/* 기본 경로 */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/board" element={<Board posts={posts} />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/writer" element={<Writer />} /> {/* /writer 경로 설정 */}
-
-        <Route path="*" element={<NotFound404 />} /> {/* 없는 페이지 처리 */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/board" element={<Board posts={posts} />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/writer" element={<Writer />} />
+          <Route path="*" element={<NotFound404 />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 function NotFound404() {
   return (
@@ -39,4 +42,4 @@ function NotFound404() {
   );
 }
 
-export default Main;
+export default AppRoutes;
