@@ -40,11 +40,15 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
     
     if (marioBtn) {
       // 마리오 점프 이미지로 변경
-      marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-jump.png\')';
+      // marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-jump.png\')';
+      marioBtn.style.backgroundImage = 'url("/assets/images/mario-jump.png")';
+
       
       // 일정 시간 후 원래 이미지로 복귀
       setTimeout(() => {
-        marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png\')';
+        // marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png\')';
+        marioBtn.style.backgroundImage = 'url("/assets/images/mario-stand.png")';
+
       }, 350);
     }
     
@@ -328,7 +332,7 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
     }
   }
   
-  // 나머지 카드 함수들도 동일한 방식으로 구현...
+  
   function cardClouds(container, dayOrNight) {
     container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
     

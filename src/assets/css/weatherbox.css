@@ -7,7 +7,7 @@ html, body {
   width: 100%;
 }
 
-body {
+/* body {
   align-items: center;
   background-color: #F4C52F;
   background-image: url('https://res.cloudinary.com/dt4qeehms/image/upload/v1476716211/weather%20machine/background-transp.png');
@@ -20,7 +20,7 @@ body {
   position: relative;
   overflow: hidden;
   animation: animatedBackground 75s linear infinite;
-}
+} */
 
 @keyframes animatedBackground {
   from { background-position: 0; }
@@ -66,7 +66,11 @@ body {
   width: 35px !important; /* !important: Fix Jquey effect() resize bug */
   height: 67px !important; /* !important: Fix Jquey effect() resize bug */
   border-radius: 0;
-  background-image: url('https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png');
+  /* background-image: url('https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png'); */
+  background-image: url('../images/mario-stand.png');
+  
+  
+
   background-repeat: no-repeat;
   background-color: transparent;
   position: absolute;

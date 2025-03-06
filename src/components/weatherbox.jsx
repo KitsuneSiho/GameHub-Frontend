@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import '../assets/css/weatherbox.css';
 import { 
     initWeatherWidget, 
@@ -11,22 +11,55 @@ import {
 
   const WeatherBox = () => {
     const containerRef = useRef(null);
+    const [weatherData, setWeatherData] = useState(null);
+
+    //************************날씨 데이터를 가져오는 부분************************
+    const getCurrentLocation=()=>{
+        navigator.geolocation.getCurrentPosition(
+          (position)=>{
+          let lat = position.coords.latitude
+          let lon = position.coords.longitude
+          getWeatherByCurrentLocation(lat, lon)
+        },
+        (error) => {
+            console.error("Error getting location:", error);
+            // 에러 처리: 기본 위치 사용 또는 사용자에게 알림
+            }    
+        )  
+    }
+      //api 가져오기
+      const getWeatherByCurrentLocation = async (lat, lon) => {
+        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=167c23e11cbd208df21931f491945cc5&units=metric`;
+        try {
+          let response = await fetch(url);
+          let data = await response.json();
+          setWeatherData(data);  // 여기서 상태를 업데이트합니다.
+          console.log(data);
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        }
+      };
+
+      useEffect(()=>{
+        getCurrentLocation();
+      },[]);
+
+      //**********************************************************************
     
-    useEffect(() => {
-        // 컴포넌트가 마운트된 후 위젯 초기화 (하드코딩된 값으로 테스트)
-        if (containerRef.current) {
-            // 테스트용 가상 데이터
-            const cityName = "Test City";
-            const temperature = 293; // 약 20°C (켈빈)
-            const weatherDescription = "clear"; // clear, clouds, rain, snow 등
-            
-            // 위젯 초기화
+      useEffect(() => {
+        if (weatherData && containerRef.current) {
+            const cityName = weatherData.name;
+            const temperature = weatherData.main.temp + 273.15; // 섭씨를 켈빈으로 변환
+            const weatherDescription = weatherData.weather[0].main.toLowerCase();
+
+
             initWeatherWidget(containerRef, cityName, temperature, weatherDescription);
             
             // 버튼에 이벤트 리스너 추가
+            //"querySelector": DOM 특정요소에 접근하기 위한 메서드
             const brickBtn = containerRef.current.querySelector('#brick-btn');
             const marioBtn = containerRef.current.querySelector('#mario-btn');
-            //querySelector: DOM 특정요소에 접근하기 위한 메서드
+            
             
             let showCelsius = true;
             
@@ -48,7 +81,7 @@ import {
                 };
             }
         }
-    }, []);
+    }, [weatherData]);
 
 
     return (
