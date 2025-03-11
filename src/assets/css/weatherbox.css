@@ -78,6 +78,22 @@ html, body {
   bottom: 160px;
 }
 
+/* 마리오 점프 애니메이션 */
+.mario-btn.jumping {
+  transform: translateY(-30px);
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-image: url('../images/mario-jump.png') !important;
+}
+
+/* 벽돌 충격 효과 */
+.brick-btn.brick-hit {
+  transform: scale(0.95);
+  filter: brightness(1.2);
+  transition: all 0.1s ease-in;
+}
+
+
+
 @media screen and (max-width: 480px) {
   body {
     background-size: auto 200px;

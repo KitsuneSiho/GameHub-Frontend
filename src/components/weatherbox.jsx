@@ -46,7 +46,7 @@ import {
 
       //**********************************************************************
     
-      useEffect(() => {
+    /*  useEffect(() => {
         if (weatherData && containerRef.current) {
             const cityName = weatherData.name;
             const temperature = weatherData.main.temp + 273.15; // 섭씨를 켈빈으로 변환
@@ -82,6 +82,51 @@ import {
             }
         }
     }, [weatherData]);
+    */
+
+    useEffect(() => {
+        if (weatherData && containerRef.current) {
+          const container = containerRef.current;
+          const brickBtn = container.querySelector('.brick-btn'); // ID → 클래스 선택자 변경
+          const marioBtn = container.querySelector('.mario-btn');
+          const [isCelsius, setIsCelsius] = useState(true); // 로컬 변수 → 상태 관리 변경
+      
+          const handleClick = useCallback(() => {
+            // 1. CSS 클래스 방식 애니메이션 적용
+            marioBtn?.classList.add('jump-animation');
+            
+            // 2. 상태 업데이트 방식 변경
+            setIsCelsius(prev => {
+              const newTemp = prev 
+                ? weatherData.main.temp // 섭씨 값 유지
+                : (weatherData.main.temp * 9/5) + 32; // 화씨 변환
+              
+              // 3. DOM 직접 조작 대신 React 리렌더링 방식
+              container.querySelector('.temp-display').textContent = 
+                `${Math.round(newTemp)}°${prev ? 'C' : 'F'}`;
+              
+              return !prev;
+            });
+      
+            // 4. 애니메이션 클래스 자동 제거
+            setTimeout(() => {
+              marioBtn?.classList.remove('jump-animation');
+            }, 350);
+      
+          }, [weatherData.main.temp]);
+      
+          // 5. 이벤트 리스너 정리 로직 강화
+          brickBtn?.addEventListener('click', handleClick);
+          marioBtn?.addEventListener('click', handleClick);
+      
+          return () => {
+            brickBtn?.removeEventListener('click', handleClick);
+            marioBtn?.removeEventListener('click', handleClick);
+            marioBtn?.classList.remove('jump-animation'); // 애니메이션 상태 초기화
+          };
+        }
+      }, [weatherData]); // weatherData 변경 시에만 재구성
+      
 
 
     return (

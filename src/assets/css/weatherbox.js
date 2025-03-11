@@ -32,7 +32,7 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
   };
   
   // 마리오 점프 애니메이션
-  export const marioJump = (container) => {
+  /* export const marioJump = (container) => {
     if (!container) return;
     
     const marioBtn = container.querySelector('#mario-btn');
@@ -58,7 +58,42 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
         // 벽돌 애니메이션 (React에서 별도 구현 필요)
       }, 100);
     }
-  };
+  }; */
+
+  export const marioJump = (container) => {
+  if (!container) return;
+  
+  // [문제 1] ID 선택자 사용 시 컴포넌트 재사용성 저하 (#은 유니크 ID에만 사용)
+  const marioBtn = container.querySelector('.mario-btn'); // 클래스 선택자로 변경
+  const brickBtn = container.querySelector('.brick-btn');
+
+  if (marioBtn) {
+    // [문제 2] 인라인 스타일 직접 변경 시 React 리렌더링 충돌
+    // 해결: CSS 클래스 토글 방식으로 변경
+    marioBtn.classList.add('jumping');
+    
+    // [문제 3] setTimeout 클로저 문제 방지를 위해 참조 저장
+    const jumpTimeout = setTimeout(() => {
+      marioBtn.classList.remove('jumping');
+      
+      // [문제 4] 애니메이션 완료 후 원래 상태 복원 확인
+      if (!marioBtn.classList.contains('jumping')) {
+        marioBtn.style.backgroundImage = 'url("/assets/images/mario-stand.png")';
+      }
+    }, 350);
+
+    // [추가] 컴포넌트 언마운트 시 타이머 클린업
+    return () => clearTimeout(jumpTimeout);
+  }
+
+  if (brickBtn) {
+    // [개선] 벽돌 애니메이션 CSS 전환으로 최적화
+    brickBtn.classList.add('brick-hit');
+    setTimeout(() => {
+      brickBtn.classList.remove('brick-hit');
+    }, 100);
+  }
+};
   
   // 온도 변환 (섭씨 <-> 화씨)
   export const convertTemp = (container, temperature, showCelsius) => {
