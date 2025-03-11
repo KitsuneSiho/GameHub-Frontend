@@ -82,7 +82,7 @@ html, body {
 .mario-btn.jumping {
   transform: translateY(-30px);
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background-image: url('../images/mario-jump.png') !important;
+  background-image: url("/assets/images/mario-jump.png") !important;
 }
 
 /* 벽돌 충격 효과 */
