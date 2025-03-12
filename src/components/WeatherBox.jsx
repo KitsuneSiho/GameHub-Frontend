@@ -7,7 +7,7 @@ import {
     makeSnow, 
     makeRain, 
     setWeatherBackground 
-  } from '../assets/css/weatherbox.js';
+  } from '../assets/css/WeatherBox.js';
 
   const WeatherBox = () => {
     const containerRef = useRef(null);
