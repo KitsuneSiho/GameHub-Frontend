@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button } from 'bootstrap';
-import WeatherBox from './weatherbox';
+import WeatherBox from './WeatherBox';
 
 function Navigation() {
   return (

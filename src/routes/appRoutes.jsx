@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from '../components/layout'
-import Home from '../pages/home';
-import Board from '../pages/board';
-import Login from '../pages/login';
-import { posts } from '../pages/sampleData';
-import Community from '../pages/community';
-import Register from '../pages/register';
-import Test from '../pages/boardTest';
-import Writer from '../pages/writer';
+import Layout from '../components/Layout'
+import Home from '../pages/Home';
+import Board from '../pages/Board';
+import Login from '../pages/Login';
+import { posts } from '../pages/SampleData';
+import Community from '../pages/Community';
+import Register from '../pages/Register';
+import Test from '../pages/BoardTest';
+import Writer from '../pages/Writer';
 
 function AppRoutes() {
   return (

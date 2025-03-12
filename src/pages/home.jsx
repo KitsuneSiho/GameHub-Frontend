@@ -1,5 +1,5 @@
 import React from "react";
-import Poster from "./poster"
+import Poster from "./Poster"
 import palworldImage from '../assets/images/game-images/Palworld.jpg'
 import minecraftImage from '../assets/images/game-images/Minecraft.png'
 import pubgImage from '../assets/images/game-images/Pubg.png'
