@@ -1,0 +1,32 @@
+.community-container {
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: whitesmoke;
+    padding: 20px;
+    margin: 0 auto;
+    width: 900px;
+    border-radius: 10px;
+}
+
+.post-list {
+    margin-bottom: 30px;
+}
+
+.head-line{
+    height: 3px;
+}
+
+.post-list h3 {
+    font-size: 1.5em;
+    color: darkslategray;
+    margin-bottom: 15px;
+}
+
+.post-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.write-btn:hover {
+    background-color: aqua;
+}
