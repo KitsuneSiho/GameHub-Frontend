@@ -10,8 +10,8 @@ const NavigationBar = () => {
     <Navbar expand="lg" className="bg-body-tertiary" id="nav-bar-bg">
       <Container fluid className="nav-bar-container">
         {/* 브랜드 로고 */}
-        <Navbar.Brand as={NavLink} to="/">
-          <img src={gamehub} alt="Game Hub" width="auto" height="50" />
+        <Navbar.Brand as={NavLink} to="/" >
+          <img src={gamehub} alt="Game Hub" width="auto" height="50" style={{ borderRadius: "15px" }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
