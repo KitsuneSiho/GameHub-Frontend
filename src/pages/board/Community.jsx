@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';  // useNavigate 훅 추가
-import '../assets/css/Community.css';
+import "../../assets/css/Community.css"
 
 const Commuinity = () => {
   const [posts, setPosts] = useState([

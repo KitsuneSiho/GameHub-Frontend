@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../assets/css/writer.css'; // 외부 CSS 파일을 불러옵니다.
+import '../../assets/css/Writer.css'; // 외부 CSS 파일을 불러옵니다.
 import { useNavigate } from 'react-router-dom';
 
 const Writer = () => {

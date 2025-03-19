@@ -1,33 +1,30 @@
-#nav-bar-bg{
+#nav-bar-bg {
   background-color: aquamarine;
 }
-.bg-body-tertiary{
+.bg-body-tertiary {
   border-radius: 15px;
-  max-width: 1200px;
+  max-width: 1200px; /* 최대 너비 고정 */
   min-width: 480px;
   padding-left: 15px;
   padding-right: 15px;
   margin-left: auto;
-  margin-right: auto;   
-  /* box-shadow: 12px 15px 7px 0px rgba(0,0,0,0.1); */
+  margin-right: auto;
   box-shadow: -10px -10px 15px rgba(233, 243, 255, 0.363),
               10px 10px 15px rgba(0, 0, 0, 0.308);
 }
 .nav-bar-container img {
-  display: block; /* 로고를 블록 요소로 설정 */
-  margin: auto; /* 로고 가운데 정렬 */
+  display: block;
+  margin: auto;
 }
 
-/* navigation.css */
 .custom-nav-link {
-  color: #333; /* 기본 링크 색상 */
-  transition: color 0.2s ease; /* 색상 변경 애니메이션 */
+  color: #333;
+  transition: color 0.2s ease;
 }
 .custom-nav-link:hover {
-  color: #666; /* 호버 시 색상 변경 */
+  color: #666;
 }
-
 .custom-nav-link.active {
-  color: #537396; /* 활성화된 링크 색상 */
-  border-bottom: 2px solid #537396; /* 활성화된 링크 아래 언더바 */
+  color: #537396;
+  border-bottom: 2px solid #537396;
 }

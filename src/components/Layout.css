@@ -1,17 +1,22 @@
-.main-content {
-    margin-top: 2rem;
+.main-content-container {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2rem;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .body-container {
     margin-top: 2rem;
-    width: 1000px;
-    height: 600px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 600px; /* 고정 높이 대신 최소 높이로 변경 */
     background-color: wheat;
     border-radius: 15px;
     padding: 1rem;
+    display: flex; /* 내부 콘텐츠를 flex로 관리 */
+    flex-direction: column; /* 세로 방향으로 콘텐츠 배치 */
 }
 
 .weather-widget {
@@ -20,7 +25,7 @@
     border-radius: 15px;
     padding: 1rem;
     width: 100%;
-    height: 600px;
+    height: 600px; /* 이 부분은 유지, 필요 시 동적 조정 가능 */
     display: flex;
     justify-content: center;
     align-items: center;

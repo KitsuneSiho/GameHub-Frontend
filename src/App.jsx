@@ -1,7 +1,6 @@
 import React from 'react'
 import './App.css'
-import './pages/boardTest.css'
-import AppRoutes from './routes/appRoutes'
+import AppRoutes from './routes/AppRoute'
 
 
 const App = ()=> (

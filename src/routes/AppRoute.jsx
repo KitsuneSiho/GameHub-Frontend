@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout';
-import Home from '../pages/Home';
-import Board from '../pages/Board';
-import Login from '../pages/Login';
-import { posts } from '../pages/SampleData';
-import Community from '../pages/Community';
-import Register from '../pages/Register';
-import Test from '../pages/BoardTest';
-import Writer from '../pages/Writer';
+import Home from '../pages/home/Home';
+import Login from '../pages/login/Login';
+import Community from '../pages/board/Community';
+import Register from '../pages/register/Register';
+import Writer from '../pages/board/Writer';
+import Test from '../pages/board/Test';
 
 function AppRoutes() {
   return (
@@ -16,7 +14,6 @@ function AppRoutes() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/board" element={<Board posts={posts} />} />
           <Route path="/test" element={<Test />} />
           <Route path="/login" element={<Login />} />
           <Route path="/community" element={<Community />} />

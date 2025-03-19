@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../assets/css/postList.css'; // 외부 CSS 파일을 불러옵니다.
+import '../../assets/css/PostList.css'; // 외부 CSS 파일을 불러옵니다.
 import { useNavigate } from 'react-router-dom';
 
 const Test = () => {
