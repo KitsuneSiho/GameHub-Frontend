@@ -62,32 +62,27 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
 
   export const marioJump = (container) => {
   if (!container) return;
-  
-  // [문제 1] ID 선택자 사용 시 컴포넌트 재사용성 저하 (#은 유니크 ID에만 사용)
-  const marioBtn = container.querySelector('.mario-btn'); // 클래스 선택자로 변경
+
+  const marioBtn = container.querySelector('.mario-btn');
+    console.log('Selected element:', marioBtn); // 버튼 요소 확인
   const brickBtn = container.querySelector('.brick-btn');
 
-  if (marioBtn) {
-    // [문제 2] 인라인 스타일 직접 변경 시 React 리렌더링 충돌
-    // 해결: CSS 클래스 토글 방식으로 변경
-    marioBtn.classList.add('jumping');
-    
-    // [문제 3] setTimeout 클로저 문제 방지를 위해 참조 저장
-    const jumpTimeout = setTimeout(() => {
-      marioBtn.classList.remove('jumping');
-      
-      // [문제 4] 애니메이션 완료 후 원래 상태 복원 확인
-      if (!marioBtn.classList.contains('jumping')) {
-        marioBtn.style.backgroundImage = 'url("/assets/images/mario-stand.png")';
-      }
-    }, 350);
+    if (marioBtn) {
+      // [✔ 변경됨] CSS 클래스 토글 방식으로 점프 이미지 변경
+      marioBtn.classList.add('jumping');
+      console.log('Class added:', marioBtn.classList); // 클래스 확인
 
-    // [추가] 컴포넌트 언마운트 시 타이머 클린업
-    return () => clearTimeout(jumpTimeout);
-  }
+      // 일정 시간 후 원래 이미지로 복원
+      const jumpTimeout = setTimeout(() => {
+        marioBtn.classList.remove('jumping');
+        console.log('Class removed:', marioBtn.classList); // 제거 확인
+      }, 350); // 복원 시간 설정
+
+      // 컴포넌트 언마운트 시 타이머 클린업 추가
+      return () => clearTimeout(jumpTimeout);
+    }
 
   if (brickBtn) {
-    // [개선] 벽돌 애니메이션 CSS 전환으로 최적화
     brickBtn.classList.add('brick-hit');
     setTimeout(() => {
       brickBtn.classList.remove('brick-hit');
