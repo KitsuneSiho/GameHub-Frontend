@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             {/* 아이디 입력칸 */}
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>아이디</Form.Label>
-                <Form.Control type="email" placeholder="아이디를 입력해주세요."/>
+                <Form.Control type="text" placeholder="아이디를 입력해주세요."/>
             </Form.Group>
 
             {/* 비밀번호 입력칸 */}
