@@ -29,8 +29,13 @@ import {
     }
       //api 가져오기
       const getWeatherByCurrentLocation = async (lat, lon) => {
-        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=167c23e11cbd208df21931f491945cc5&units=metric`;
-        try {
+          // 환경 변수에서 API 키와 URL 가져오기
+          const apiKey = import.meta.env.VITE_API_KEY;
+          const apiUrl = import.meta.env.VITE_API_URL;
+
+          // URL 생성
+          let url = `${apiUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+          try {
           let response = await fetch(url);
           let data = await response.json();
           setWeatherData(data);  // 여기서 상태를 업데이트합니다.
