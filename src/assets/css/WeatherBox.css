@@ -80,19 +80,34 @@ html, body {
 
 /* 마리오 점프 애니메이션 */
 .mario-btn.jumping {
-  transform: translateY(-30px);
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  /*background-image: url('/src/assets/images/mario-jump.png') !important;*/
-  /*background-image: url('../images/mario-jump.png');*/
+  animation: marioJump 0.35s ease-in-out;
   background-image: url('../images/mario-jump.png') !important;
 }
 
-/* 벽돌 충격 효과 */
-.brick-btn.brick-hit {
-  transform: scale(0.95);
-  filter: brightness(1.2);
-  transition: all 0.1s ease-in;
+@keyframes marioJump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0); }
 }
+
+/* 벽돌 충격 효과 */
+/* 벽돌 버튼 바운스 애니메이션 */
+@keyframes brickBounce {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+.brick-btn.brick-hit {
+  animation: brickBounce 0.50s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 
 
 
@@ -127,6 +142,12 @@ html, body {
 
 .btn:focus {
   outline: none;
+  box-shadow: none; /* 일부 브라우저에서 점선을 표시하는 경우 */
+}
+
+#mario-btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .displayed-data {

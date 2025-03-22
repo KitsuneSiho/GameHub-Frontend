@@ -98,7 +98,7 @@ import {
                 </div>
                 <canvas id="particle"></canvas>
                 <div className="box-btn">
-                    <button type="button" id="brick-btn" className="btn"></button>
+                    <button type="button" id="brick-btn" className="btn brick-btn"></button>
                 </div>
                 <button type="button" id="mario-btn" className="btn mario-btn"></button>
             </div>

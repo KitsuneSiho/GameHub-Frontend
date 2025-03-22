@@ -30,65 +30,38 @@ export const initWeatherWidget = (containerRef, cityName, temperature, weatherDe
     
     return { container, cityElem, tempElem };
   };
-  
-  // 마리오 점프 애니메이션
-  /* export const marioJump = (container) => {
-    if (!container) return;
-    
-    const marioBtn = container.querySelector('#mario-btn');
-    const brickBtn = container.querySelector('#brick-btn');
-    
-    if (marioBtn) {
-      // 마리오 점프 이미지로 변경
-      // marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-jump.png\')';
-      marioBtn.style.backgroundImage = 'url("/assets/images/mario-jump.png")';
 
-      
-      // 일정 시간 후 원래 이미지로 복귀
-      setTimeout(() => {
-        // marioBtn.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/mario-stand.png\')';
-        marioBtn.style.backgroundImage = 'url("/assets/images/mario-stand.png")';
-
-      }, 350);
-    }
-    
-    if (brickBtn) {
-      // 벽돌 효과 (React에서는 애니메이션으로 구현 필요)
-      setTimeout(() => {
-        // 벽돌 애니메이션 (React에서 별도 구현 필요)
-      }, 100);
-    }
-  }; */
-
-  export const marioJump = (container) => {
+  //마리오 점프
+export const marioJump = (container) => {
   if (!container) return;
 
   const marioBtn = container.querySelector('.mario-btn');
-    console.log('Selected element:', marioBtn); // 버튼 요소 확인
   const brickBtn = container.querySelector('.brick-btn');
 
-    if (marioBtn) {
-      // [✔ 변경됨] CSS 클래스 토글 방식으로 점프 이미지 변경
-      marioBtn.classList.add('jumping');
-      console.log('Class added:', marioBtn.classList); // 클래스 확인
+  // 마리오 점프 애니메이션
+  if (marioBtn) {
+    marioBtn.classList.add('jumping');
 
-      // 일정 시간 후 원래 이미지로 복원
-      const jumpTimeout = setTimeout(() => {
-        marioBtn.classList.remove('jumping');
-        console.log('Class removed:', marioBtn.classList); // 제거 확인
-      }, 350); // 복원 시간 설정
+    // 테두리 포커스 제거(먹히다 안 먹히다 함)
+    marioBtn.blur();
 
-      // 컴포넌트 언마운트 시 타이머 클린업 추가
-      return () => clearTimeout(jumpTimeout);
-    }
-
-  if (brickBtn) {
-    brickBtn.classList.add('brick-hit');
     setTimeout(() => {
-      brickBtn.classList.remove('brick-hit');
-    }, 100);
+      marioBtn.classList.remove('jumping');
+    }, 350); // 마리오 점프 지속 시간
+  }
+
+  // 박스 애니메이션 (마리오가 부딪힌 후 실행)
+  if (brickBtn) {
+    setTimeout(() => {
+      brickBtn.classList.add('brick-hit');
+      setTimeout(() => {
+        brickBtn.classList.remove('brick-hit');
+      }, 350); // 박스 애니메이션 지속 시간
+    }, 105); // 지연 시간: 마리오가 부딪히는 시점
   }
 };
+
+
   
   // 온도 변환 (섭씨 <-> 화씨)
   export const convertTemp = (container, temperature, showCelsius) => {
