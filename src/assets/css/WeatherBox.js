@@ -242,7 +242,8 @@ export const marioJump = (container) => {
   
   // 날씨 상태별 배경 설정 함수들
   function cardClear(container, dayOrNight) {
-    container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
+    container.style.backgroundImage = 'url(\'../images/card-clear.png\')';
+    // container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
     
     if (dayOrNight == 1) {
       container.style.backgroundColor = '#5C94FC';
@@ -250,10 +251,10 @@ export const marioJump = (container) => {
       const sunWrapper = document.createElement('div');
       sunWrapper.className = 'sun-wrapper';
       sunWrapper.innerHTML = '<div class="sun-inner"><img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716209/weather%20machine/sun-animated.gif\'></div>';
-      
-      const displayedData = container.querySelector('.displayed-data');
-      if (displayedData) {
-        displayedData.insertAdjacentElement('afterend', sunWrapper);
+
+      const displayedData = container.querySelector(".displayed-data");
+      if (displayedData && !container.querySelector(".sun-wrapper")) { // 중복 생성 방지
+        displayedData.insertAdjacentElement("afterend", sunWrapper);
       }
     } else {
       container.style.backgroundColor = '#090F1B';
