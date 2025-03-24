@@ -60,9 +60,14 @@ import {
 
             // 현재 시간과 일출/일몰 시간을 이용해 낮/밤 여부 결정
             const currentTime = new Date().getTime() / 1000;
-            const dayOrNight = currentTime > weatherData.sys.sunrise && currentTime < weatherData.sys.sunset;
 
+            //currentTime > weatherData.sys.sunrise: 현재 시간이 일출 시간보다 늦은지 확인
+            //currentTime < weatherData.sys.sunset: 현재 시간이 일몰 시간보다 이른지 확인
+            //&&: 두 조건을 모두 만족해야 함 (AND 연산)
+            //? 1 : 0: 삼항 연산자. 조건이 참이면 1, 거짓이면 0을 반환
+            const dayOrNight = currentTime > weatherData.sys.sunrise && currentTime < weatherData.sys.sunset ? 1 : 0;
 
+            //날씨 위젯 초기화
             initWeatherWidget(containerRef, cityName, temperature, weatherDescription);
 
             //cardClear 함수 호출. 낮/밤 여부에 따라 배경 변경

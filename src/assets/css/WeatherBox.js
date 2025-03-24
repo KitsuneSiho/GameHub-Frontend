@@ -250,8 +250,12 @@ export const marioJump = (container) => {
     container.style.backgroundImage = 'url(\'../images/card-clear.png\')';
     // container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
 
+    // 기존 요소 제거 (중복 생성을 방지)
+    container.querySelector('.sun-wrapper')?.remove();
+    container.querySelector('.star')?.remove();
+
     // 낮/밤 분기 처리
-    if (dayOrNight == 1) {
+    if (dayOrNight == 1) { //낮
       container.style.backgroundColor = '#5C94FC';
       console.log('배경색 낮으로 변경됨: ' + container.style.backgroundColor);
       
@@ -264,9 +268,10 @@ export const marioJump = (container) => {
       if (displayedData && !container.querySelector(".sun-wrapper")) { // 중복 생성 방지
         displayedData.insertAdjacentElement("afterend", sunWrapper);
       }
-    } else {
+    } else { //밤
       container.style.backgroundColor = '#090F1B';
       console.log("배경색 밤에 맞게 변경됨: " + container.style.backgroundColor);
+
       
       const starElem = document.createElement('div');
       starElem.className = 'star';
