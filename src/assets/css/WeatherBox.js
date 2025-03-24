@@ -242,13 +242,6 @@ export const marioJump = (container) => {
   
   // 날씨 상태별 배경 설정 함수들
   export function cardClear(container, dayOrNight) {
-    console.log('cardClear 함수 호출됨');
-    console.log('dayOrNight: ', dayOrNight);
-    console.log('container: ', container);
-
-
-    container.style.backgroundImage = 'url(\'../images/card-clear.png\')';
-    // container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
 
     // 기존 요소 제거 (중복 생성을 방지)
     container.querySelector('.sun-wrapper')?.remove();
@@ -257,7 +250,7 @@ export const marioJump = (container) => {
     // 낮/밤 분기 처리
     if (dayOrNight == 1) { //낮
       container.style.backgroundColor = '#5C94FC';
-      console.log('배경색 낮으로 변경됨: ' + container.style.backgroundColor);
+      console.log('배경색 낮, ' + container.style.backgroundColor);
       
       const sunWrapper = document.createElement('div');
       sunWrapper.className = 'sun-wrapper';
@@ -270,7 +263,7 @@ export const marioJump = (container) => {
       }
     } else { //밤
       container.style.backgroundColor = '#090F1B';
-      console.log("배경색 밤에 맞게 변경됨: " + container.style.backgroundColor);
+      console.log("배경색 밤, " + container.style.backgroundColor);
 
       
       const starElem = document.createElement('div');
