@@ -241,23 +241,32 @@ export const marioJump = (container) => {
   };
   
   // 날씨 상태별 배경 설정 함수들
-  function cardClear(container, dayOrNight) {
+  export function cardClear(container, dayOrNight) {
+    console.log('cardClear 함수 호출됨');
+    console.log('dayOrNight: ', dayOrNight);
+    console.log('container: ', container);
+
+
     container.style.backgroundImage = 'url(\'../images/card-clear.png\')';
     // container.style.backgroundImage = 'url(\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716210/weather%20machine/card-clear.png\')';
-    
+
+    // 낮/밤 분기 처리
     if (dayOrNight == 1) {
       container.style.backgroundColor = '#5C94FC';
+      console.log('배경색 낮으로 변경됨: ' + container.style.backgroundColor);
       
       const sunWrapper = document.createElement('div');
       sunWrapper.className = 'sun-wrapper';
       sunWrapper.innerHTML = '<div class="sun-inner"><img src=\'https://res.cloudinary.com/dt4qeehms/image/upload/v1476716209/weather%20machine/sun-animated.gif\'></div>';
 
+      //displayedData: 날씨 데이터를 표시하는 요소
       const displayedData = container.querySelector(".displayed-data");
       if (displayedData && !container.querySelector(".sun-wrapper")) { // 중복 생성 방지
         displayedData.insertAdjacentElement("afterend", sunWrapper);
       }
     } else {
       container.style.backgroundColor = '#090F1B';
+      console.log("배경색 밤에 맞게 변경됨: " + container.style.backgroundColor);
       
       const starElem = document.createElement('div');
       starElem.className = 'star';

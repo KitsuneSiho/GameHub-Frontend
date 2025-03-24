@@ -6,7 +6,8 @@ import {
     convertTemp, 
     makeSnow, 
     makeRain, 
-    setWeatherBackground 
+    setWeatherBackground,
+    cardClear
   } from '../assets/css/WeatherBox.js';
 
   const WeatherBox = () => {
@@ -57,8 +58,15 @@ import {
             const temperature = weatherData.main.temp + 273.15; // 섭씨를 켈빈으로 변환
             const weatherDescription = weatherData.weather[0].main.toLowerCase();
 
+            // 현재 시간과 일출/일몰 시간을 이용해 낮/밤 여부 결정
+            const currentTime = new Date().getTime() / 1000;
+            const dayOrNight = currentTime > weatherData.sys.sunrise && currentTime < weatherData.sys.sunset;
+
 
             initWeatherWidget(containerRef, cityName, temperature, weatherDescription);
+
+            //cardClear 함수 호출. 낮/밤 여부에 따라 배경 변경
+            cardClear(containerRef.current, dayOrNight);
             
             // 버튼에 이벤트 리스너 추가
             //"querySelector": DOM 특정요소에 접근하기 위한 메서드
@@ -71,7 +79,7 @@ import {
             if (brickBtn && marioBtn) {
                 const handleClick = () => {
                     marioJump(containerRef.current);
-                    showCelsius = convertTemp(containerRef.current, temperature, showCelsius);
+                    showCelsius  = convertTemp(containerRef.current, temperature, showCelsius);
                 };
                 
                 brickBtn.addEventListener('click', handleClick);
