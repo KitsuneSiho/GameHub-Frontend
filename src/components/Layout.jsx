@@ -4,7 +4,6 @@ import Footer from './Footer';
 import { Container, Row, Col } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import './Layout.css';
-import WeatherBox from './WeatherBox';
 
 const Layout = () => {
     return (
@@ -19,7 +18,7 @@ const Layout = () => {
                     </Col>
                     <Col lg={3} md={4} className="ps-0">
                         <div className="weather-widget">
-                            <WeatherBox />
+                            <p>날씨위젯들어갈곳</p>
                         </div>
                     </Col>
                 </Row>

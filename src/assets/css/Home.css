@@ -1,0 +1,21 @@
+.home-poster {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    flex-wrap: wrap; /* 창 크기에 따라 줄바꿈 허용 */
+    gap: 20px; /* margin 대신 gap 사용으로 간격 통일 */
+    max-width: 100%; /* 부모 컨테이너(.body-container)에 맞춤 */
+    padding: 0 15px; /* 좌우 패딩 추가 */
+}
+
+.poster-item {
+    text-align: center;
+    flex: 1 1 200px; /* 최소 너비 200px로 유연하게 확장/축소 */
+    max-width: 250px; /* 최대 너비 제한 */
+}
+
+.poster-image {
+    width: 100%; /* 부모(.poster-item)에 맞춰 크기 조정 */
+    height: 300px; /* 고정 높이 유지 */
+    object-fit: cover; /* 이미지 비율 유지하며 잘림 */
+    border-radius: 10px;
+}

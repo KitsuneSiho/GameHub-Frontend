@@ -72,7 +72,7 @@ import {
 
             //cardClear 함수 호출. 낮/밤 여부에 따라 배경 변경
             cardClear(containerRef.current, dayOrNight);
-            
+
             // 버튼에 이벤트 리스너 추가
             //"querySelector": DOM 특정요소에 접근하기 위한 메서드
             const brickBtn = containerRef.current.querySelector('#brick-btn');

@@ -1,3 +1,36 @@
+#nav-bar-bg {
+  background-color: aquamarine;
+}
+.bg-body-tertiary {
+  border-radius: 15px;
+  max-width: 1200px; /* 최대 너비 고정 */
+  min-width: 480px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: -10px -10px 15px rgba(233, 243, 255, 0.363),
+              10px 10px 15px rgba(0, 0, 0, 0.308);
+}
+.nav-bar-container img {
+  display: block;
+  margin: auto;
+}
+
+.custom-nav-link {
+  color: #333;
+  transition: color 0.2s ease;
+}
+.custom-nav-link:hover {
+  color: #666;
+}
+.custom-nav-link.active {
+  color: #537396;
+  border-bottom: 2px solid #537396;
+}
+
+/*
 body {
   padding-top: 56px;
 }
+*/
