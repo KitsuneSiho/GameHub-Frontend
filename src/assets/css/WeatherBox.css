@@ -29,11 +29,15 @@ html, body {
 
 .box-temperature {
   background-size: 100%;
+  aspect-ratio: 16 / 9;
   outline: 4px solid black;
   box-shadow: 18px 22px 35px -6px rgba(0,0,0,0.75);
-  min-height: 460px;
+  /*min-height: 460px;*/
+  /*min-height: 200px;*/
   overflow: hidden;
   position: relative;
+  /*height: 100%;*/
+  /*width: 100%;*/
   height: 460px;
   width: 380px;
   animation-duration: 8s;

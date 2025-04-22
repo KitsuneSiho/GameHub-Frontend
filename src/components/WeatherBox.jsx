@@ -14,6 +14,10 @@ import {
     const containerRef = useRef(null);
     const [weatherData, setWeatherData] = useState(null);
 
+    const scalerRef = useRef(null);
+    const contentRef = useRef(null);
+
+
     //************************날씨 데이터를 가져오는 부분************************
     const getCurrentLocation=()=>{
         navigator.geolocation.getCurrentPosition(
@@ -51,7 +55,8 @@ import {
       },[]);
 
       //**********************************************************************
-    
+
+
       useEffect(() => {
         if (weatherData && containerRef.current) {
             const cityName = weatherData.name;
@@ -101,6 +106,21 @@ import {
         }
     }, [weatherData]);
 
+      //************************위젯 창크기 조절시 비율 유지용 useEffect************************
+      useEffect(() => {
+          function resize() {
+              if (!scalerRef.current || !contentRef.current) return;
+              const parentWidth = scalerRef.current.offsetWidth;
+              const parentHeight = scalerRef.current.offsetHeight;
+              const contentWidth = 380;
+              const contentHeight = 460;
+              const scale = Math.min(parentWidth / contentWidth, parentHeight / contentHeight);
+              contentRef.current.style.transform = `scale(${scale})`;
+          }
+          resize();
+          window.addEventListener("resize", resize);
+          return () => window.removeEventListener("resize", resize);
+      }, []);
 
     return (
         <div className="weather-widget-container" ref={containerRef}> {/* 리액트에선 상위 부모요소가 필수적으로 있어야 하므로 하나의 부모 요소로 감싸기 */}
@@ -115,9 +135,9 @@ import {
                 </div>
                 <button type="button" id="mario-btn" className="btn mario-btn"></button>
             </div>
-            <div className="container box-footer">
+            {/*<div className="container box-footer">
                 <footer><p>© 2016 ErreC • All Rights Reserved</p></footer>
-            </div>
+            </div>*/}
         </div>
     );
 };
