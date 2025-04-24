@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useLocation } from "react-router-dom"; //
 import '../assets/css/weatherbox.css';
 import { 
     initWeatherWidget, 
@@ -11,12 +12,47 @@ import {
   } from '../assets/css/WeatherBox.js';
 
   const WeatherBox = () => {
+    const location = useLocation(); // 현재 라우트 정보 가져오기
+
     const containerRef = useRef(null);
     const [weatherData, setWeatherData] = useState(null);
 
     // scalerRef: 부모 크기 측정용, contentRef: 실제 위젯 컨텐츠(380x460)에 연결
     const scalerRef = useRef(null);
     const contentRef = useRef(null);
+
+      // handleResize 함수는 부모 컨테이너(scaler)의 크기에 맞춰
+      // 내부 위젯(content)의 크기를 비율을 유지하면서 축소(또는 원본 크기 유지)하도록 scale을 적용함
+      const handleResize = useCallback(() => {
+          const scaler = scalerRef.current;
+          const content = contentRef.current;
+          if (!scaler || !content) return;
+
+          const parentWidth = scaler.offsetWidth;
+          const parentHeight = scaler.offsetHeight;
+          const contentWidth = 380;
+          const contentHeight = 460;
+
+          const scale = Math.min(
+              parentWidth / contentWidth,
+              parentHeight / contentHeight,
+              1
+          );
+
+          content.style.transform = `scale(${scale})`;
+      }, []); // 의존성 배열 비워도 됨 (ref는 변경되지 않음)
+
+      // 라우트 변경 감지
+      useEffect(() => {
+          const timer = setTimeout(handleResize, 10);
+          return () => clearTimeout(timer);
+      }, [location.pathname, handleResize]); // handleResize 의존성 추가
+
+      // 창 크기 변경 감지
+      useEffect(() => {
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
+      }, [handleResize]); // handleResize 의존성 추가
 
 
     //************************날씨 데이터를 가져오는 부분************************
@@ -106,35 +142,6 @@ import {
             }
         }
     }, [weatherData]);
-
-
-      /************************** 위젯 반응형 크기조절 함수 **************************/
-      useEffect(() => {
-          // handleResize 함수는 부모 컨테이너(scaler)의 크기에 맞춰
-          // 내부 위젯(content)의 크기를 비율을 유지하면서 축소(또는 원본 크기 유지)하도록 scale을 적용함
-          function handleResize() {
-              const scaler = scalerRef.current;
-              const content = contentRef.current;
-              if (!scaler || !content) return; // scaler나 content가 없으면 함수 종료
-
-              // 부모(.weather-widget-scaler)의 실제 크기
-              const parentWidth = scaler.offsetWidth; // 부모 컨테이너의 실제 너비(px)
-              const parentHeight = scaler.offsetHeight; // 부모 컨테이너의 실제 높이(px)
-              // 위젯 원본 크기
-              const contentWidth = 380; // 위젯의 원본 너비(px)
-              const contentHeight = 460; // 위젯의 원본 높이(px)
-
-              // 부모에 맞게 축소, 확대는 최대 1로 제한
-              const scale = Math.min(parentWidth / contentWidth, parentHeight / contentHeight, 1);
-              // transform으로 비율 유지하며 축소/확대
-              contentRef.current.style.transform = `scale(${scale})`;
-          }
-          handleResize();
-          window.addEventListener("resize", handleResize);
-          return () => window.removeEventListener("resize", handleResize);
-      }, []);
-
-
 
       return (
           <div className="weather-widget-scaler" ref={scalerRef}>
