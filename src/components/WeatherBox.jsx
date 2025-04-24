@@ -14,6 +14,7 @@ import {
     const containerRef = useRef(null);
     const [weatherData, setWeatherData] = useState(null);
 
+    // scalerRef: 부모 크기 측정용, contentRef: 실제 위젯 컨텐츠(380x460)에 연결
     const scalerRef = useRef(null);
     const contentRef = useRef(null);
 
@@ -106,39 +107,56 @@ import {
         }
     }, [weatherData]);
 
-      //************************위젯 창크기 조절시 비율 유지용 useEffect************************
+
+      /************************** 위젯 반응형 크기조절 함수 **************************/
       useEffect(() => {
-          function resize() {
-              if (!scalerRef.current || !contentRef.current) return;
-              const parentWidth = scalerRef.current.offsetWidth;
-              const parentHeight = scalerRef.current.offsetHeight;
-              const contentWidth = 380;
-              const contentHeight = 460;
-              const scale = Math.min(parentWidth / contentWidth, parentHeight / contentHeight);
+          // handleResize 함수는 부모 컨테이너(scaler)의 크기에 맞춰
+          // 내부 위젯(content)의 크기를 비율을 유지하면서 축소(또는 원본 크기 유지)하도록 scale을 적용함
+          function handleResize() {
+              const scaler = scalerRef.current;
+              const content = contentRef.current;
+              if (!scaler || !content) return; // scaler나 content가 없으면 함수 종료
+
+              // 부모(.weather-widget-scaler)의 실제 크기
+              const parentWidth = scaler.offsetWidth; // 부모 컨테이너의 실제 너비(px)
+              const parentHeight = scaler.offsetHeight; // 부모 컨테이너의 실제 높이(px)
+              // 위젯 원본 크기
+              const contentWidth = 380; // 위젯의 원본 너비(px)
+              const contentHeight = 460; // 위젯의 원본 높이(px)
+
+              // 부모에 맞게 축소, 확대는 최대 1로 제한
+              const scale = Math.min(parentWidth / contentWidth, parentHeight / contentHeight, 1);
+              // transform으로 비율 유지하며 축소/확대
               contentRef.current.style.transform = `scale(${scale})`;
           }
-          resize();
-          window.addEventListener("resize", resize);
-          return () => window.removeEventListener("resize", resize);
+          handleResize();
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
       }, []);
 
-    return (
-        <div className="weather-widget-container" ref={containerRef}> {/* 리액트에선 상위 부모요소가 필수적으로 있어야 하므로 하나의 부모 요소로 감싸기 */}
-            <div className="container box-temperature">
-                <div className="displayed-data">
-                    <p className="temperature"></p>
-                    <p className="cityg"></p>
+
+
+      return (
+          <div className="weather-widget-scaler" ref={scalerRef}>
+              <div className="weather-widget-content" ref={contentRef}>
+                <div className="weather-widget-container" ref={containerRef}> {/* 리액트에선 상위 부모요소가 필수적으로 있어야 하므로 하나의 부모 요소로 감싸기 */}
+                    <div className="container box-temperature">
+                        <div className="displayed-data">
+                            <p className="temperature"></p>
+                            <p className="cityg"></p>
+                        </div>
+                        <canvas id="particle"></canvas>
+                        <div className="box-btn">
+                            <button type="button" id="brick-btn" className="btn brick-btn"></button>
+                        </div>
+                        <button type="button" id="mario-btn" className="btn mario-btn"></button>
+                    </div>
+                    {/*<div className="container box-footer">
+                        <footer><p>© 2016 ErreC • All Rights Reserved</p></footer>
+                    </div>*/}
                 </div>
-                <canvas id="particle"></canvas>
-                <div className="box-btn">
-                    <button type="button" id="brick-btn" className="btn brick-btn"></button>
-                </div>
-                <button type="button" id="mario-btn" className="btn mario-btn"></button>
-            </div>
-            {/*<div className="container box-footer">
-                <footer><p>© 2016 ErreC • All Rights Reserved</p></footer>
-            </div>*/}
-        </div>
+              </div>
+          </div>
     );
 };
 

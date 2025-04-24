@@ -7,20 +7,19 @@ html, body {
   width: 100%;
 }
 
-/* body {
-  align-items: center;
-  background-color: #F4C52F;
-  background-image: url('https://res.cloudinary.com/dt4qeehms/image/upload/v1476716211/weather%20machine/background-transp.png');
-  display: flex;
-  flex-direction: column;
-  background-size: auto 300px;
-  background-repeat: repeat-x;
-  background-position: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  animation: animatedBackground 75s linear infinite;
-} */
+/* -----반응형 크기 조절용----- */
+@media (max-width: 768px) {
+  .weather-widget-scaler {
+    transform: scale(0.8); /* 모바일에서 추가 축소 */
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-widget-scaler {
+    transform: scale(0.6);
+  }
+}
+/*-------------------------*/
 
 @keyframes animatedBackground {
   from { background-position: 0; }

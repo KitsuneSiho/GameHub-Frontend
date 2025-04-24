@@ -23,32 +23,27 @@
     margin-top: 2rem;
     background-color: #f0f0f0;
     border-radius: 15px;
-    padding: 1rem;
     width: 100%;
     height: 600px; /* 이 부분은 유지, 필요 시 동적 조정 가능 */
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    position: relative;
+    overflow: hidden; /* 내용물 넘침 방지*/
+    position: relative; /* 절대 위치 제거 */
+    padding: 0% /*패딩제거*/
 }
 
-/* 비율 고정용 래퍼 */
 .weather-widget-scaler {
-    width: 100%;
+    width: 98%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* 부모(.weather-widget) 기준으로 꽉 채움 */
-    position: absolute;
-    top: 0; left: 0;
 }
 
-/* 실제 위젯 내용(원본 비율 380x460) */
 .weather-widget-content {
     width: 380px;
     height: 460px;
-    transform-origin: top left;
-    /* 아래에서 JS로 scale() 적용 */
+    transform-origin: center;
 }
+

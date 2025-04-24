@@ -17,10 +17,10 @@ const Layout = () => {
                             <Outlet />
                         </Container>
                     </Col>
-                    <Col lg={3} md={4} className="ps-0">
+                    <Col lg={3} md={4} className="ps-0" >
                         <div className="weather-widget">
-                            <WeatherBox />
-                        </div>
+                                <WeatherBox />
+                            </div>
                     </Col>
                 </Row>
             </Container>
